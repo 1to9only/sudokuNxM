@@ -353,7 +353,8 @@ end;
 procedure NCPlus_clauses(clauses: TStringList);
 var
   i, row, row2, col, col2, num, num2: Integer;
-  s: String;
+//H2164 Variable 's' is declared but never used in 'NCPlus_clauses'
+//s: String;
 const
   DP = 1; // Up to this value cyclical differences are not allowed
 begin
@@ -427,7 +428,10 @@ var
 begin
   n_clauses_eff := 0;
   DIM := B_ROW * B_COL;
+//W1073 Combining signed type and unsigned 64-bit type - treated as an unsigned type
+{$WARN COMBINING_SIGNED_UNSIGNED64 OFF}
   n_clauses := UInt64(4) * DIM * DIM * (DIM * (DIM - 1) div 2 + 1);
+{$WARN COMBINING_SIGNED_UNSIGNED64 DEFAULT}
   n_variables := DIM * DIM * DIM;
   clauses.Clear;
   clauses.Add('c CNF file in DIMACS format');

@@ -2241,6 +2241,8 @@ var
   n_clauses: Integer;
 Label xxx;
 begin
+//W1036 Variable 'n_clauses' might not have been initialized
+  n_clauses := 0; // initialize
   if not fullSolve then
     goto xxx;
 
@@ -2568,7 +2570,10 @@ begin
   SpinEditRow.Enabled := true;
   SpinEditCol.Enabled := true;
 
+//W1024 Combining signed and unsigned types - widened both operands
+{$WARN COMBINING_SIGNED_UNSIGNED OFF}
   Memo1.Lines.Add(FloatToStr((getTickcount - tme) / 1000) + ' s total time.');
+{$WARN COMBINING_SIGNED_UNSIGNED DEFAULT}
   Memo1.Lines.Add('');
 end;
 
@@ -2937,7 +2942,10 @@ end;
 
 function NC_error(): Integer;
 var
-  r, c, k, i: Integer;
+//H2164 Variable 'k' is declared but never used in 'NC_error'
+//H2164 Variable 'i' is declared but never used in 'NC_error'
+//r, c, k, i: Integer;
+  r, c: Integer;
 begin
   Result := 0;
 
@@ -3075,7 +3083,9 @@ end;
 procedure TForm1.BCreateClick(Sender: TObject);
 var
   a: array of Integer;
-  i, j, k, r, e, eOld, eNew, eminPrint, tmp: Integer;
+//H2164 Variable 'k' is declared but never used in 'TForm1.BCreateClick'
+//i, j, k, r, e, eOld, eNew, eminPrint, tmp: Integer;
+  i, j, r, e, eOld, eNew, eminPrint, tmp: Integer;
   cnt: UINT64;
   tm: Cardinal;
 const
@@ -3167,7 +3177,10 @@ begin
       end
       else
         e := e - eOld + eNew;
+//W1073 Combining signed type and unsigned 64-bit type - treated as an unsigned type
+{$WARN COMBINING_SIGNED_UNSIGNED64 OFF}
       if (cnt mod Min(1000, SWAPMAX - 1) = 0) then
+{$WARN COMBINING_SIGNED_UNSIGNED64 DEFAULT}
       begin
         if e < eminPrint then
         begin
@@ -3207,7 +3220,9 @@ end;
 procedure TForm1.BDefaultClick(Sender: TObject);
 var
   b, k: Integer;
-  t1, t2: array of ByteArr;
+//H2164 Variable 't1' is declared but never used in 'TForm1.BDefaultClick'
+//H2164 Variable 't2' is declared but never used in 'TForm1.BDefaultClick'
+//t1, t2: array of ByteArr;
   i: Integer;
 begin
   if not(CheckSudokuW.Checked or CheckSudokuX.Checked or CheckNC.Checked) then
@@ -3294,9 +3309,14 @@ end;
 
 procedure TForm1.BLowClueGridClick(Sender: TObject);
 var
-  i, j, b, k: Integer;
-  t1, t2: array of ByteArr;
-  a: array of Integer;
+//H2164 Variable 'j' is declared but never used in 'TForm1.BLowClueGridClick'
+//H2164 Variable 't1' is declared but never used in 'TForm1.BLowClueGridClick'
+//H2164 Variable 't2' is declared but never used in 'TForm1.BLowClueGridClick'
+//H2164 Variable 'a' is declared but never used in 'TForm1.BLowClueGridClick'
+//i, j, b, k: Integer;
+  i, b, k: Integer;
+//t1, t2: array of ByteArr;
+//a: array of Integer;
   fillMode, statechange: Boolean;
 begin
   if CheckSudokuX.Checked then
@@ -3402,6 +3422,8 @@ var
   r, c, sz: Integer;
   s, s2, form: String;
 begin
+//W1036 Variable 'sz' might not have been initialized
+  sz := 2; // initialize
   if CheckOutlineBoxes.Checked then
   begin
     Result := 0;
@@ -3629,7 +3651,9 @@ end;
 // Button "Reduce givens" click
 procedure TForm1.BReduceBasicClick(Sender: TObject);
 var
-  i, j, n, rnd, clauseLimit, deltalimit, givens: Integer;
+//H2077 Value assigned to 'clauseLimit' never used
+//i, j, n, rnd, clauseLimit, deltalimit, givens: Integer;
+  i, j, n, rnd, deltalimit, givens: Integer;
   rc_setsave: ByteArr;
   randArr: array of Integer;
   removable: array of Boolean;
@@ -3708,10 +3732,11 @@ begin
   saveConfiguration(n_cand_delOld, n_setOld, rc_setOld, rc_nOld, rn_cOld,
     cn_rOld, bn_kOld, pn_kOld);
 
-  if CheckSATSolver.Checked then
-    clauseLimit := MaxInt div 2
-  else
-    clauseLimit := 0;
+//H2077 Value assigned to 'clauseLimit' never used
+//if CheckSATSolver.Checked then
+//  clauseLimit := MaxInt div 2
+//else
+//  clauseLimit := 0;
 
   repeat
     for i := 0 to DIM2 - 1 do
@@ -3777,7 +3802,8 @@ begin
 
     end;
 
-    clauseLimit := clauseLimit + deltalimit;
+//H2077 Value assigned to 'clauseLimit' never used
+//  clauseLimit := clauseLimit + deltalimit;
     alldone := true;
     for i := 0 to DIM2 - 1 do
       if removable[i] and (rc_set[i] <> 0) then
@@ -4027,7 +4053,9 @@ end;
 
 procedure TForm1.BReduceSATClick(Sender: TObject);
 var
-  i, j, rnd, clauseLimit, deltalimit, givens: Integer;
+//H2164 Variable 'deltalimit' is declared but never used in 'TForm1.BReduceSATClick'
+//i, j, rnd, clauseLimit, deltalimit, givens: Integer;
+  i, j, rnd, clauseLimit, givens: Integer;
   rc_setsave: ByteArr;
   randArr: array of Integer;
   n_clauses: Integer;
