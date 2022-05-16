@@ -11,7 +11,6 @@ uses
   Vcl.Menus, Vcl.ExtCtrls;
 
 const
-
 {$IFDEF BIG}
   N_MAXBOXLENGTH = 21; // Values up to 31 possible
   N_BIG = (N_MAXBOXLENGTH * N_MAXBOXLENGTH) div 64 + 1;
@@ -26,81 +25,89 @@ type
   TForm1 = class(TForm)
     Memo1: TMemo;
     OpenDialog1: TOpenDialog;
-    GroupBox1: TGroupBox;
-    CheckNakedSingles: TCheckBox;
-    CheckHiddenSingles: TCheckBox;
-    CheckBlockLineInteraction: TCheckBox;
-    CheckNakedTuple: TCheckBox;
-    CheckHiddenTuple: TCheckBox;
-    Label3: TLabel;
-    SpinEditMaxHiddenTuple: TSpinEdit;
-    CheckSATSolver: TCheckBox;
     PopupMenu1: TPopupMenu;
     Paste1: TMenuItem;
-    GroupBox2: TGroupBox;
-    BLoad: TButton;
+
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
     SpinEditRow: TSpinEdit;
     Label2: TLabel;
     SpinEditCol: TSpinEdit;
-    Label1: TLabel;
+    BLoad: TButton;
+
+    GroupBox2: TGroupBox;
+    CheckOutlineBoxes: TCheckBox;
+    BPrintPuzzle: TButton;
+
     GroupBox3: TGroupBox;
-    BSATSolver: TButton;
     CheckVerbose: TCheckBox;
     CheckSudokuX: TCheckBox;
-    BCheckSolution: TButton;
+    CheckSudokuP: TCheckBox;
+    CheckNC: TCheckBox;
+    CheckSudokuW: TCheckBox;
+    BSATSolver: TButton;
     BAddSolution: TButton;
+    BCheckSolution: TButton;
+
     GroupBox4: TGroupBox;
-    BReduceBasic: TButton;
-    BStop: TButton;
-    CheckSingleStep: TCheckBox;
-    CheckBasicFish: TCheckBox;
-    Label4: TLabel;
-    SpinEditMaxFish: TSpinEdit;
+    CheckHiddenSingles: TCheckBox;
+    CheckNakedSingles: TCheckBox;
+    CheckBlockLineInteraction: TCheckBox;
+    Splitter1: TSplitter;
+    CheckHiddenTuple: TCheckBox;
+    SpinEditMaxHiddenTuple: TSpinEdit;
+    Label3: TLabel;
+    CheckNakedTuple: TCheckBox;
     SpinEditMaxNakedTuple: TSpinEdit;
+    Label4: TLabel;
+    CheckBasicFish: TCheckBox;
+    SpinEditMaxFish: TSpinEdit;
     Label5: TLabel;
     Splitter2: TSplitter;
-    Splitter1: TSplitter;
+    CheckSATSolver: TCheckBox;
+
     GroupBox5: TGroupBox;
-    BPrintPuzzle: TButton;
-    CheckOutlineBoxes: TCheckBox;
     GroupBox6: TGroupBox;
+    RadioOneFold: TRadioButton;
+    RadioTwoFold: TRadioButton;
+    RadioFourFold: TRadioButton;
     CheckCenterLineHor: TCheckBox;
     CheckCenterLineVer: TCheckBox;
     CheckDiagonal: TCheckBox;
+
     GroupBox7: TGroupBox;
-    RadioOneFold: TRadioButton;
-    RadioFourFold: TRadioButton;
-    RadioTwoFold: TRadioButton;
-    GroupBox8: TGroupBox;
-    BCreate: TButton;
-    BDefault: TButton;
-    BPermute: TButton;
-    CheckSudokuP: TCheckBox;
+    BReduceBasic: TButton;
+    BStop: TButton;
     BReduceSAT: TButton;
+    CheckSingleStep: TCheckBox;
+
+    GroupBox8: TGroupBox;
+    BDefault: TButton;
+    BCreate: TButton;
     BLowClueGrid: TButton;
-    CheckSudokuW: TCheckBox;
-    CheckNC: TCheckBox;
-    procedure BSATSolverClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure BLoadClick(Sender: TObject);
-    procedure SpinEditColChange(Sender: TObject);
-    procedure SpinEditRowChange(Sender: TObject);
+    BPermute: TButton;
+
     procedure BAddSolutionClick(Sender: TObject);
-    procedure SEMaxHiddenTupleChange(Sender: TObject);
-    procedure BReduceBasicClick(Sender: TObject);
-    procedure BStopClick(Sender: TObject);
-    procedure BPrintPuzzleClick(Sender: TObject);
-    procedure Paste1Click(Sender: TObject);
     procedure BCheckSolutionClick(Sender: TObject);
-    procedure RbSymClick(Sender: TObject);
+    procedure BCreateClick(Sender: TObject);
+    procedure BDefaultClick(Sender: TObject);
+    procedure BLoadClick(Sender: TObject);
+    procedure BLowClueGridClick(Sender: TObject);
+    procedure BPermuteClick(Sender: TObject);
+    procedure BPrintPuzzleClick(Sender: TObject);
+    procedure BReduceBasicClick(Sender: TObject);
+    procedure BReduceSATClick(Sender: TObject);
+    procedure BSATSolverClick(Sender: TObject);
+    procedure BStopClick(Sender: TObject);
     procedure CheckCenterLineHorClick(Sender: TObject);
     procedure CheckCenterLineVerClick(Sender: TObject);
     procedure CheckDiagonalClick(Sender: TObject);
-    procedure BCreateClick(Sender: TObject);
-    procedure BDefaultClick(Sender: TObject);
-    procedure BPermuteClick(Sender: TObject);
-    procedure BReduceSATClick(Sender: TObject);
-    procedure BLowClueGridClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Paste1Click(Sender: TObject);
+    procedure RbSymClick(Sender: TObject);
+    procedure SEMaxHiddenTupleChange(Sender: TObject);
+    procedure SpinEditColChange(Sender: TObject);
+    procedure SpinEditRowChange(Sender: TObject);
   private
     nochange: Boolean;
     sym: Integer; // demanded symmetry for puzzle enries
@@ -117,7 +124,6 @@ type
   end;
 
 {$IFDEF BIG}
-
   ByteArr = array of Word;
 {$ELSE}
   ByteArr = array of Byte;
@@ -2548,7 +2554,7 @@ begin
   begin
     Memo1.Lines.Add('');
     i := PrintCurrentPuzzle;
-    Memo1.Lines.Add('');
+//  Memo1.Lines.Add('');
     if i = 0 then
     begin
       if solutionValid then
@@ -3424,6 +3430,30 @@ var
 begin
 //W1036 Variable 'sz' might not have been initialized
   sz := 2; // initialize
+  if DIM < 10 then // one line display, 1-9 for up to 9x9
+  begin
+    s := '';
+    for r := 0 to DIM - 1 do
+      for c := 0 to DIM - 1 do
+        if rc_set[DIM * r + c] = 0 then
+          s := s + '.'
+        else
+          s := s + IntToStr(rc_set[DIM * r + c]);
+    Memo1.Lines.Add(s);
+//  Memo1.Lines.Add('');
+  end;
+  if DIM >= 10 then // one line display, A-Z for >= 10x10
+  begin
+    s := '';
+    for r := 0 to DIM - 1 do
+      for c := 0 to DIM - 1 do
+        if rc_set[DIM * r + c] = 0 then
+          s := s + '.'
+        else
+          s := s + Chr(64 + rc_set[DIM * r + c]);
+    Memo1.Lines.Add(s);
+//  Memo1.Lines.Add('');
+  end;
   if CheckOutlineBoxes.Checked then
   begin
     Result := 0;
@@ -3447,7 +3477,7 @@ begin
       end;
       if r mod B_ROW = 0 then
       begin
-        Memo1.Lines.Add(seperatorLine(sz));
+        Memo1.Lines.Add(TrimLeft(seperatorLine(sz)));
       end;
       for c := 0 to DIM - 1 do
       begin
@@ -3465,10 +3495,10 @@ begin
         s := s + s2;
       end;
       s := s + ' |';
-      Memo1.Lines.Add(s);
+      Memo1.Lines.Add(TrimLeft(s));
     end;
-    Memo1.Lines.Add(seperatorLine(sz));
-    Memo1.Lines.Add('');
+    Memo1.Lines.Add(TrimLeft(seperatorLine(sz)));
+//  Memo1.Lines.Add('');
   end
   else
   begin
@@ -3495,21 +3525,8 @@ begin
       end;
       Memo1.Lines.Add(s);
     end;
-    Memo1.Lines.Add('');
+//  Memo1.Lines.Add('');
   end;
-  if DIM < 10 then // one line display
-  begin
-    s := '';
-    for r := 0 to DIM - 1 do
-      for c := 0 to DIM - 1 do
-        if rc_set[DIM * r + c] = 0 then
-          s := s + '.'
-        else
-          s := s + IntToStr(rc_set[DIM * r + c]);
-    Memo1.Lines.Add(s);
-    Memo1.Lines.Add('');
-  end;
-
 end;
 
 procedure arrclear_sym(var a: ByteArr; s, n: Integer);
@@ -3812,7 +3829,7 @@ begin
   Memo1.Lines.Add('');
   initBitArraysFromGivens;
   PrintCurrentPuzzle;
-  Memo1.Lines.Add('');
+//Memo1.Lines.Add('');
   Memo1.Lines.Add(IntToStr(n_set) + ' givens, ' + IntToStr(DIM3 - n_cand_del) +
     ' candidates(pencilmarks).');
   if alldone then
@@ -4229,7 +4246,7 @@ begin
   Memo1.Lines.Add(' ');
   initBitArraysFromGivens;
   PrintCurrentPuzzle;
-  Memo1.Lines.Add('');
+//Memo1.Lines.Add('');
   Memo1.Lines.Add(IntToStr(n_set) + ' givens, ' + IntToStr(DIM3 - n_cand_del) +
     ' candidates(pencilmarks).');
   if alldone then

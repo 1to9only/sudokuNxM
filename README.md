@@ -1,13 +1,25 @@
-# sudokuNxM Solver and Generator
+[ The old **README.md** has been renamed [sudokuNxM.md](sudokuNxM.md) ]
+
+### sudokuNxM Solver and Generator
+
+This is a fork of https://github.com/hkociemba/sudokuNxM
+
+- with my cosmetic changes
+
+* using Delphi 10.4 Community Edition (Version 27.0.40680.4203)
+* builds with 0 hints and 0 warnings
+
+- updated sat4j.core to 2.3.6.v20201214 ([http://sat4j.org/](http://sat4j.org/))
+
+> Using the SAT solver (which is not mandatory) needs the file "org.sat4j.core.jar" in the same directory as the program. If the SAT solver does not work make sure that the 64-bit java.exe is contained in your path environment variable (for my machine it is for example "C:\Program Files\Java\jdk1.8.0_331\bin").
+>> From: [Program usage](http://kociemba.org/themen/sudoku/program.html) (edited)
+
+- fixed check solution exception if puzzle not solved
+- hand modified the screen layout (Form1)
+- changed version numbering (yyyy.m.d)
 
 
-![](gui.jpg "")
+**Program usage:** [http://kociemba.org/themen/sudoku/program.html](http://kociemba.org/themen/sudoku/program.html)\
+**Details of the SAT solver:** [http://kociemba.org/themen/sudoku/satsolver.html](http://kociemba.org/themen/sudoku/satsolver.html)\
+**Kociemba's web page:** [http://kociemba.org/index.html](http://kociemba.org/index.html)
 
-The NxM-Sudoku is a generalization of the standard <a href="https://en.wikipedia.org/wiki/Sudoku">3x3 Sudoku</a> with 9 squares of size 3x3 and a total of 81 cells. In the general case we have N\*M rectangles of size NxM and a total of (N*M)<sup>2</sup> cells.</p>
-      <p><a href="themen/sudoku/program.html"></a> Though there are standard Sudokus which are almost impossible to solve only with logical reasoning by humans, from a computational point of view solving a standard Sudoku is almost trivial. Since the general problem is <a href="https://en.wikipedia.org/wiki/NP-completeness">NP-complete</a> finding a solution gets more demanding for larger grids.</p>
-      <p>We choose an approach where we simplify the given NxM-Sudoku as far as possible using &quot;human&quot; methods like hidden and naked singles and tuples, block-line interaction etc. and transform the remaining problem into a <a href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">boolean satisfiability problem</a>. We then use <a href="http://www.sat4j.org/">Sat4J</a> for solving.</p>
-      Besides solving of Sudokus the program also includes features like generating Sudokus, testing for unique solutions etc.
-      <p>
-  
-  
- ## <a href="http://kociemba.org/themen/sudoku/program.html">Windows executable, program usage and description.</a>

@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 343
-  Top = 300
+  Left = 200
+  Top = 100
   Anchors = []
-  Caption = 'SATSudoku 0.98'
-  ClientHeight = 741
-  ClientWidth = 931
+  Caption = 'SATSudoku 2022.5.16'
+  ClientHeight = 755
+  ClientWidth = 950
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,15 +14,12 @@ object Form1: TForm1
   OldCreateOrder = False
   Position = poDesigned
   OnCreate = FormCreate
-  DesignSize = (
-    931
-    741)
   PixelsPerInch = 96
   TextHeight = 13
   object Memo1: TMemo
     Left = 8
-    Top = 0
-    Width = 927
+    Top = 8
+    Width = 934
     Height = 540
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = DEFAULT_CHARSET
@@ -37,66 +34,204 @@ object Form1: TForm1
     WordWrap = False
   end
   object GroupBox1: TGroupBox
-    Left = 321
-    Top = 546
-    Width = 203
-    Height = 187
+    Left = 10
+    Top = 560
+    Width = 140
+    Height = 105
     Anchors = [akLeft, akBottom]
-    Caption = 'Used methods'
+    Caption = 'Load from file'
     TabOrder = 1
-    object Label3: TLabel
-      Left = 154
-      Top = 71
+    object Label1: TLabel
+      Left = 37
+      Top = 20
+      Width = 68
+      Height = 13
+      Anchors = [akTop]
+      Caption = 'Select boxsize'
+    end
+    object SpinEditRow: TSpinEdit
+      Left = 18
+      Top = 40
       Width = 41
-      Height = 13
-      Caption = 'Maxsize '
+      Height = 22
+      Anchors = [akTop]
+      MaxValue = 15
+      MinValue = 1
+      PopupMenu = PopupMenu1
+      TabOrder = 0
+      Value = 3
+      OnChange = SpinEditRowChange
+      OnEnter = SpinEditRowChange
     end
-    object Label4: TLabel
-      Left = 154
-      Top = 129
-      Width = 38
+    object Label2: TLabel
+      Left = 65
+      Top = 42
+      Width = 6
       Height = 13
-      Caption = 'Maxsize'
+      Anchors = [akTop]
+      Caption = 'x'
     end
-    object Label5: TLabel
-      Left = 154
-      Top = 100
+    object SpinEditCol: TSpinEdit
+      Left = 78
+      Top = 40
       Width = 41
-      Height = 13
-      Caption = 'Maxsize '
+      Height = 22
+      Anchors = [akTop]
+      MaxValue = 15
+      MinValue = 1
+      PopupMenu = PopupMenu1
+      TabOrder = 1
+      Value = 3
+      OnChange = SpinEditColChange
+      OnEnter = SpinEditColChange
     end
-    object Splitter2: TSplitter
-      Left = 0
-      Top = 154
-      Width = 203
-      Height = 3
-      Align = alNone
-      Beveled = True
+    object BLoad: TButton
+      Left = 17
+      Top = 70
+      Width = 104
+      Height = 25
+      Anchors = [akTop]
+      Caption = 'Load puzzle'
+      TabOrder = 2
+      OnClick = BLoadClick
     end
-    object Splitter1: TSplitter
-      Left = 0
-      Top = 61
-      Width = 203
-      Height = 3
-      Align = alNone
-      Beveled = True
-    end
-    object CheckNakedSingles: TCheckBox
-      Left = 114
-      Top = 18
-      Width = 97
-      Height = 17
-      Caption = 'Naked Singles'
+  end
+  object GroupBox2: TGroupBox
+    Left = 10
+    Top = 670
+    Width = 140
+    Height = 75
+    Anchors = [akLeft, akBottom]
+    Caption = 'Miscellaneous '
+    TabOrder = 2
+    object CheckOutlineBoxes: TCheckBox
+      Left = 18
+      Top = 20
+      Width = 104
+      Height = 14
+      Anchors = [akLeft, akBottom]
+      Caption = 'Outline Boxes'
       Checked = True
       State = cbChecked
       TabOrder = 0
     end
+    object BPrintPuzzle: TButton
+      Left = 17
+      Top = 40
+      Width = 104
+      Height = 25
+      Anchors = [akLeft, akBottom]
+      Caption = 'Show active puzzle'
+      TabOrder = 1
+      OnClick = BPrintPuzzleClick
+    end
+  end
+  object GroupBox3: TGroupBox
+    Left = 159
+    Top = 560
+    Width = 160
+    Height = 187
+    Anchors = [akLeft, akBottom]
+    Caption = 'Solve'
+    TabOrder = 3
+    object CheckVerbose: TCheckBox
+      Left = 18
+      Top = 20
+      Width = 60
+      Height = 15
+      Caption = 'Verbose'
+      TabOrder = 0
+    end
+    object CheckSudokuX: TCheckBox
+      Left = 80
+      Top = 20
+      Width = 65
+      Height = 15
+      Anchors = [akLeft, akBottom]
+      Caption = 'SudokuX'
+      TabOrder = 1
+    end
+    object CheckSudokuP: TCheckBox
+      Left = 80
+      Top = 42
+      Width = 65
+      Height = 15
+      Caption = 'SudokuP'
+      TabOrder = 2
+    end
+    object CheckNC: TCheckBox
+      Left = 18
+      Top = 64
+      Width = 60
+      Height = 15
+      Caption = 'NC+'
+      TabOrder = 3
+    end
+    object CheckSudokuW: TCheckBox
+      Left = 80
+      Top = 64
+      Width = 65
+      Height = 15
+      Caption = 'SudokuW'
+      TabOrder = 4
+    end
+    object BSATSolver: TButton
+      Left = 17
+      Top = 90
+      Width = 123
+      Height = 25
+      Anchors = [akLeft, akBottom]
+      Caption = 'Solve puzzle'
+      Enabled = False
+      TabOrder = 5
+      OnClick = BSATSolverClick
+    end
+    object BAddSolution: TButton
+      Left = 17
+      Top = 120
+      Width = 123
+      Height = 25
+      Anchors = [akLeft, akBottom]
+      Caption = 'Find different solution'
+      Enabled = False
+      TabOrder = 6
+      OnClick = BAddSolutionClick
+    end
+    object BCheckSolution: TButton
+      Left = 17
+      Top = 150
+      Width = 123
+      Height = 25
+      Anchors = [akLeft, akBottom]
+      Caption = 'Check Solution'
+      TabOrder = 7
+      OnClick = BCheckSolutionClick
+    end
+  end
+  object GroupBox4: TGroupBox
+    Left = 328
+    Top = 560
+    Width = 204
+    Height = 187
+    Anchors = [akLeft, akBottom]
+    Caption = 'Used methods'
+    TabOrder = 4
     object CheckHiddenSingles: TCheckBox
       Left = 16
       Top = 19
       Width = 97
       Height = 17
       Caption = 'Hidden Singles'
+      Checked = True
+      State = cbChecked
+      TabOrder = 0
+    end
+    object CheckNakedSingles: TCheckBox
+      Left = 114
+      Top = 19
+      Width = 97
+      Height = 17
+      Caption = 'Naked Singles'
       Checked = True
       State = cbChecked
       TabOrder = 1
@@ -111,25 +246,23 @@ object Form1: TForm1
       State = cbChecked
       TabOrder = 2
     end
-    object CheckNakedTuple: TCheckBox
-      Left = 16
-      Top = 99
-      Width = 85
-      Height = 17
-      Caption = 'Naked Tuples'
-      Checked = True
-      State = cbChecked
-      TabOrder = 3
+    object Splitter1: TSplitter
+      Left = 0
+      Top = 61
+      Width = 203
+      Height = 3
+      Align = alNone
+      Beveled = True
     end
     object CheckHiddenTuple: TCheckBox
       Left = 16
       Top = 70
-      Width = 97
+      Width = 99
       Height = 17
       Caption = 'Hidden Tuples'
       Checked = True
       State = cbChecked
-      TabOrder = 4
+      TabOrder = 3
     end
     object SpinEditMaxHiddenTuple: TSpinEdit
       Left = 107
@@ -139,28 +272,56 @@ object Form1: TForm1
       MaxValue = 1000
       MinValue = 1
       PopupMenu = PopupMenu1
-      TabOrder = 5
+      TabOrder = 4
       Value = 3
     end
-    object CheckSATSolver: TCheckBox
+    object Label3: TLabel
+      Left = 154
+      Top = 70
+      Width = 41
+      Height = 13
+      Caption = 'Maxsize '
+    end
+    object CheckNakedTuple: TCheckBox
       Left = 16
-      Top = 164
-      Width = 184
+      Top = 100
+      Width = 99
       Height = 17
-      Caption = 'SAT Solver'
+      Caption = 'Naked Tuples'
+      Checked = True
+      State = cbChecked
+      TabOrder = 5
+    end
+    object SpinEditMaxNakedTuple: TSpinEdit
+      Left = 107
+      Top = 98
+      Width = 41
+      Height = 22
+      MaxValue = 1000
+      MinValue = 1
+      PopupMenu = PopupMenu1
       TabOrder = 6
+      Value = 3
+      OnChange = SEMaxHiddenTupleChange
+    end
+    object Label4: TLabel
+      Left = 154
+      Top = 100
+      Width = 41
+      Height = 13
+      Caption = 'Maxsize '
     end
     object CheckBasicFish: TCheckBox
       Left = 16
-      Top = 131
-      Width = 97
+      Top = 130
+      Width = 99
       Height = 17
       Caption = 'Basic Fish'
       TabOrder = 7
     end
     object SpinEditMaxFish: TSpinEdit
       Left = 107
-      Top = 126
+      Top = 128
       Width = 41
       Height = 22
       MaxValue = 1000
@@ -169,184 +330,114 @@ object Form1: TForm1
       TabOrder = 8
       Value = 3
     end
-    object SpinEditMaxNakedTuple: TSpinEdit
-      Left = 107
-      Top = 96
+    object Label5: TLabel
+      Left = 154
+      Top = 130
       Width = 41
-      Height = 22
-      MaxValue = 1000
-      MinValue = 1
-      PopupMenu = PopupMenu1
+      Height = 13
+      Caption = 'Maxsize'
+    end
+    object Splitter2: TSplitter
+      Left = 0
+      Top = 154
+      Width = 203
+      Height = 3
+      Align = alNone
+      Beveled = True
+    end
+    object CheckSATSolver: TCheckBox
+      Left = 16
+      Top = 164
+      Width = 88
+      Height = 17
+      Caption = 'SAT Solver'
       TabOrder = 9
-      Value = 3
-      OnChange = SEMaxHiddenTupleChange
     end
   end
-  object GroupBox2: TGroupBox
-    Left = 10
-    Top = 546
-    Width = 137
-    Height = 112
+  object GroupBox5: TGroupBox
+    Left = 541
+    Top = 560
+    Width = 240
+    Height = 100
     Anchors = [akLeft, akBottom]
-    Caption = 'Load from file'
-    TabOrder = 2
-    DesignSize = (
-      137
-      112)
-    object Label2: TLabel
-      Left = 65
-      Top = 48
-      Width = 6
-      Height = 13
-      Anchors = [akTop]
-      Caption = 'x'
-    end
-    object Label1: TLabel
-      Left = 37
-      Top = 28
-      Width = 68
-      Height = 13
-      Anchors = [akTop]
-      Caption = 'Select boxsize'
-    end
-    object BLoad: TButton
-      Left = 17
-      Top = 76
-      Width = 104
-      Height = 25
-      Anchors = [akTop]
-      Caption = 'Load puzzle'
+    Caption = 'Symmetries'
+    TabOrder = 5
+    object GroupBox6: TGroupBox
+      Left = 10
+      Top = 15
+      Width = 90
+      Height = 78
+      Caption = 'Rotational'
       TabOrder = 0
-      OnClick = BLoadClick
+      object RadioOneFold: TRadioButton
+        Left = 10
+        Top = 15
+        Width = 80
+        Height = 17
+        Caption = '1-fold'
+        Checked = True
+        TabOrder = 0
+        TabStop = True
+        OnClick = RbSymClick
+      end
+      object RadioTwoFold: TRadioButton
+        Left = 10
+        Top = 35
+        Width = 80
+        Height = 17
+        Caption = '2-fold'
+        TabOrder = 1
+        OnClick = RbSymClick
+      end
+      object RadioFourFold: TRadioButton
+        Left = 10
+        Top = 55
+        Width = 80
+        Height = 17
+        Caption = '4-fold'
+        TabOrder = 2
+        OnClick = RbSymClick
+      end
     end
-    object SpinEditRow: TSpinEdit
-      Left = 18
-      Top = 48
-      Width = 41
-      Height = 22
-      Anchors = [akTop]
-      MaxValue = 15
-      MinValue = 1
-      PopupMenu = PopupMenu1
-      TabOrder = 1
-      Value = 3
-      OnChange = SpinEditRowChange
-      OnEnter = SpinEditRowChange
-    end
-    object SpinEditCol: TSpinEdit
-      Left = 77
-      Top = 47
-      Width = 41
-      Height = 22
-      Anchors = [akTop]
-      MaxValue = 15
-      MinValue = 1
-      PopupMenu = PopupMenu1
-      TabOrder = 2
-      Value = 3
-      OnChange = SpinEditColChange
-      OnEnter = SpinEditColChange
-    end
-  end
-  object GroupBox3: TGroupBox
-    Left = 155
-    Top = 546
-    Width = 160
-    Height = 187
-    Anchors = [akLeft, akBottom]
-    Caption = 'Solve'
-    TabOrder = 3
-    DesignSize = (
-      160
-      187)
-    object BSATSolver: TButton
-      Left = 17
-      Top = 89
-      Width = 123
-      Height = 25
-      Anchors = [akLeft, akBottom]
-      Caption = 'Solve puzzle'
-      Enabled = False
-      TabOrder = 0
-      OnClick = BSATSolverClick
-    end
-    object CheckVerbose: TCheckBox
-      Left = 17
-      Top = 19
-      Width = 60
-      Height = 15
-      Caption = 'Verbose'
-      TabOrder = 1
-    end
-    object CheckSudokuX: TCheckBox
-      Left = 79
+    object CheckCenterLineHor: TCheckBox
+      Left = 110
       Top = 20
-      Width = 65
-      Height = 15
-      Anchors = [akLeft, akBottom]
-      Caption = 'SudokuX'
-      TabOrder = 2
-    end
-    object BCheckSolution: TButton
-      Left = 17
-      Top = 151
       Width = 123
-      Height = 25
-      Anchors = [akLeft, akBottom]
-      Caption = 'Check Solution'
+      Height = 17
+      Caption = 'Center line horizontal '
+      TabOrder = 1
+      OnClick = CheckCenterLineHorClick
+    end
+    object CheckCenterLineVer: TCheckBox
+      Left = 110
+      Top = 45
+      Width = 123
+      Height = 17
+      Caption = 'Center line vertical'
+      TabOrder = 2
+      OnClick = CheckCenterLineVerClick
+    end
+    object CheckDiagonal: TCheckBox
+      Left = 110
+      Top = 70
+      Width = 123
+      Height = 17
+      Caption = 'Diagonal'
       TabOrder = 3
-      OnClick = BCheckSolutionClick
-    end
-    object BAddSolution: TButton
-      Left = 17
-      Top = 120
-      Width = 122
-      Height = 25
-      Anchors = [akLeft, akBottom]
-      Caption = 'Find different solution'
-      Enabled = False
-      TabOrder = 4
-      OnClick = BAddSolutionClick
-    end
-    object CheckSudokuP: TCheckBox
-      Left = 79
-      Top = 41
-      Width = 97
-      Height = 17
-      Caption = 'SudokuP'
-      TabOrder = 5
-    end
-    object CheckSudokuW: TCheckBox
-      Left = 79
-      Top = 63
-      Width = 97
-      Height = 20
-      Caption = 'SudokuW'
-      TabOrder = 6
-    end
-    object CheckNC: TCheckBox
-      Left = 17
-      Top = 64
-      Width = 57
-      Height = 17
-      Caption = 'NC+'
-      TabOrder = 7
+      OnClick = CheckDiagonalClick
     end
   end
-  object GroupBox4: TGroupBox
-    Left = 530
-    Top = 646
-    Width = 239
-    Height = 87
+  object GroupBox7: TGroupBox
+    Left = 541
+    Top = 665
+    Width = 240
+    Height = 82
     Anchors = [akLeft, akBottom]
     Caption = 'Reduce puzzle'
-    TabOrder = 4
-    DesignSize = (
-      239
-      87)
+    TabOrder = 6
     object BReduceBasic: TButton
-      Left = 18
-      Top = 25
+      Left = 15
+      Top = 20
       Width = 113
       Height = 25
       Anchors = [akLeft, akBottom]
@@ -357,7 +448,7 @@ object Form1: TForm1
     end
     object BStop: TButton
       Left = 137
-      Top = 25
+      Top = 20
       Width = 97
       Height = 25
       Anchors = [akLeft, akBottom]
@@ -365,184 +456,78 @@ object Form1: TForm1
       TabOrder = 1
       OnClick = BStopClick
     end
-    object CheckSingleStep: TCheckBox
-      Left = 143
-      Top = 60
-      Width = 74
-      Height = 17
-      Anchors = [akLeft, akBottom]
-      Caption = 'Single step'
-      TabOrder = 2
-    end
     object BReduceSAT: TButton
-      Left = 16
-      Top = 56
+      Left = 15
+      Top = 50
       Width = 113
       Height = 25
       Caption = 'Use SAT method '
       Enabled = False
-      TabOrder = 3
+      TabOrder = 2
       OnClick = BReduceSATClick
     end
-  end
-  object GroupBox5: TGroupBox
-    Left = 10
-    Top = 662
-    Width = 137
-    Height = 71
-    Anchors = [akLeft, akBottom]
-    Caption = 'Miscellaneous '
-    TabOrder = 5
-    DesignSize = (
-      137
-      71)
-    object BPrintPuzzle: TButton
-      Left = 17
-      Top = 40
-      Width = 104
-      Height = 26
+    object CheckSingleStep: TCheckBox
+      Left = 143
+      Top = 54
+      Width = 77
+      Height = 17
       Anchors = [akLeft, akBottom]
-      Caption = 'Show active puzzle'
-      TabOrder = 0
-      OnClick = BPrintPuzzleClick
-    end
-    object CheckOutlineBoxes: TCheckBox
-      Left = 17
-      Top = 20
-      Width = 104
-      Height = 14
-      Anchors = [akLeft, akBottom]
-      Caption = 'Outline Boxes'
-      Checked = True
-      State = cbChecked
-      TabOrder = 1
-    end
-  end
-  object GroupBox6: TGroupBox
-    Left = 530
-    Top = 546
-    Width = 239
-    Height = 102
-    Anchors = [akLeft, akBottom]
-    Caption = 'Symmetries'
-    TabOrder = 6
-    object CheckCenterLineHor: TCheckBox
-      Left = 116
-      Top = 21
-      Width = 123
-      Height = 17
-      Caption = 'Center line horizontal '
-      TabOrder = 0
-      OnClick = CheckCenterLineHorClick
-    end
-    object CheckCenterLineVer: TCheckBox
-      Left = 116
-      Top = 44
-      Width = 118
-      Height = 17
-      Caption = 'Center line vertical'
-      TabOrder = 1
-      OnClick = CheckCenterLineVerClick
-    end
-    object CheckDiagonal: TCheckBox
-      Left = 116
-      Top = 67
-      Width = 123
-      Height = 17
-      Caption = 'Diagonal'
-      TabOrder = 2
-      OnClick = CheckDiagonalClick
-    end
-    object GroupBox7: TGroupBox
-      Left = 8
-      Top = 18
-      Width = 91
-      Height = 76
-      Caption = 'Rotational'
+      Caption = 'Single step'
       TabOrder = 3
-      object RadioOneFold: TRadioButton
-        Left = 9
-        Top = 15
-        Width = 113
-        Height = 17
-        Caption = '1-fold'
-        Checked = True
-        TabOrder = 0
-        TabStop = True
-        OnClick = RbSymClick
-      end
-      object RadioFourFold: TRadioButton
-        Left = 9
-        Top = 56
-        Width = 113
-        Height = 17
-        Caption = '4-fold'
-        TabOrder = 1
-        OnClick = RbSymClick
-      end
-      object RadioTwoFold: TRadioButton
-        Left = 9
-        Top = 35
-        Width = 113
-        Height = 17
-        Caption = '2-fold'
-        TabOrder = 2
-        OnClick = RbSymClick
-      end
     end
   end
   object GroupBox8: TGroupBox
-    Left = 775
-    Top = 546
-    Width = 149
+    Left = 790
+    Top = 560
+    Width = 150
     Height = 187
     Anchors = [akLeft, akBottom]
     Caption = 'Create Grid'
     TabOrder = 7
-    object BCreate: TButton
-      Left = 16
-      Top = 48
-      Width = 121
-      Height = 25
-      Caption = 'Random Grid'
-      TabOrder = 0
-      OnClick = BCreateClick
-    end
     object BDefault: TButton
-      Left = 16
-      Top = 17
-      Width = 121
+      Left = 20
+      Top = 20
+      Width = 110
       Height = 25
       Caption = 'Default Grid'
-      TabOrder = 1
+      TabOrder = 0
       OnClick = BDefaultClick
     end
-    object BPermute: TButton
-      Left = 16
-      Top = 159
-      Width = 113
+    object BCreate: TButton
+      Left = 20
+      Top = 55
+      Width = 110
       Height = 25
-      Caption = 'Shuffle Grid'
-      TabOrder = 2
-      OnClick = BPermuteClick
+      Caption = 'Random Grid'
+      TabOrder = 1
+      OnClick = BCreateClick
     end
     object BLowClueGrid: TButton
-      Left = 16
-      Top = 95
-      Width = 121
+      Left = 10
+      Top = 100
+      Width = 130
       Height = 25
       Caption = 'Few Clues Default Grid'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = BLowClueGridClick
+    end
+    object BPermute: TButton
+      Left = 20
+      Top = 150
+      Width = 110
+      Height = 25
+      Caption = 'Shuffle Grid'
+      TabOrder = 3
+      OnClick = BPermuteClick
     end
   end
   object OpenDialog1: TOpenDialog
-    Left = 64
-    Top = 552
+    Left = 50
+    Top = 500
   end
   object PopupMenu1: TPopupMenu
-    Left = 104
-    Top = 552
+    Left = 100
+    Top = 500
     object Paste1: TMenuItem
       Caption = 'Paste'
       ShortCut = 16470
